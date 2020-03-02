@@ -54,6 +54,6 @@ function runClick(event){
       busMall.list[i].numClicked++;
 
       if(Count === maxClicked){
-      ('previousChartData', JSON.stringify(busMall.list));
+(busMall.list));
         rmEventListener();
        
