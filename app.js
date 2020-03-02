@@ -19,16 +19,6 @@ function busMall(name, filePath, description){
   this.numClicked = 0;
   busMall.list.push(this);
 }
-if(localStorage.previousChartData){
- busMall.list = JSON.parse(localStorage.getItem('previousChartData'));
-}else{
-  newInstances(imagesNames,imagesPaths,images);
-}
-
-function newInstances(newName, newFilePath, newDescription){
-  for (var i = 0; i< imagesNames.length; i++){
-    new busMall(newName[i], newFilePath[i], newDescription[i]);
-  }
 }
 
 console.log(busMall.list);
@@ -64,7 +54,7 @@ function runClick(event){
       busMall.list[i].numClicked++;
 
       if(Count === maxClicked){
-        localStorage.setItem('previousChartData', JSON.stringify(busMall.list));
+      ('previousChartData', JSON.stringify(busMall.list));
         rmEventListener();
         doTheChartThing();
        
