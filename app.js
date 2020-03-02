@@ -56,47 +56,4 @@ function runClick(event){
       if(Count === maxClicked){
       ('previousChartData', JSON.stringify(busMall.list));
         rmEventListener();
-        doTheChartThing();
        
-       
-        break;
-      }
-
-    }
-  }
-  getRandoImages();
-}
-
-
-var previousImgDisplayedArr = [];
-
-function getRandoImages(){
-  var img = ['image1', 'image2', 'image3'];
-  var currentImgDisplayedArr = [];
-  for (var i = 0; i < img.length; i++){
-    var image = document.getElementById(img[i]);
-    var deDuplicated = false;
-    while(deDuplicated === false){
-      var randomImageIndex = getrandomnumber();
-      if (!currentImgDisplayedArr.includes(randomImageIndex) && !previousImgDisplayedArr.includes(randomImageIndex)){
-        currentImgDisplayedArr.push(randomImageIndex);
-        busMall.list[randomImageIndex].numDisplayed++;
-        image.src = busMall.list[randomImageIndex].filePath;
-        image.alt = busMall.list[randomImageIndex].name;
-        deDuplicated = true;
-      }
-
-    }
-  }
-  previousImgDisplayedArr = currentImgDisplayedArr;
-}
-
-
-
-setupEventListener();
-getRandoImages();
-
-var ctx = document.getElementById('chartArea').getContext('2d');
-
-var allTheData = busMall.list;
-
