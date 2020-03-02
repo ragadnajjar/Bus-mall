@@ -1,112 +1,135 @@
+var busMallImages = [
+  'bag.jpg',
+  'banana.jpg',
+  'bathroom.jpg',
+  'boots.jpg',
+  'breakfast.jpg',
+  'bubblegum.jpg',
+  'chair.jpg',
+  'cthulhu.jpg',
+  'dog-duck.jpg',
+  'dragon.jpg',
+  'pen.jpg',
+  'pet-sweep.jpg',
+  'scissors.jpg',
+  'shark.jpg',
+  'sweep.png',
+  'tauntaun.jpg',
+  'unicorn.jpg',
+  'usb.gif',
+  'water-can.jpg',
+  'wine-glass.jpg'
+];
 
-  
-'use strict';
+var leftImage = document.querySelector('#leftImge');
+var centerImage = document.querySelector('#centerImge')
+var rightImage = document.querySelector('#rightImge');
+var groupImageSection = document.getElementById('all_images');
 
-var imagesNames = ['bag.jpg', 'banana.jpg','bathroom.jpg','boots.jpg','breakfast.jpg','bubblegum.jpg','chair.jpg','cthulhu.jpg','dog-duck.jpg','dragon.jpg','pen.jpg','pet-sweep.jpg','scissors.jpg','shark','sweep.png','usb.gif','water-can.jpg','wine-glass.jpg'];
+var position = [];
+var totalClicks = 1;
 
-busMall.list = [];
-
-var Count = 0;
-var maxClicked = 25;
-
-
-//constructor funtion
-function busMall(name, filePath, description){
-  this.name = name;
-  this.filePath = filePath;
-  this.description = description;
-  this.numDisplayed = 0;
-  this.numClicked = 0;
-  busMall.list.push(this);
+function Positions(raghad) {
+  this.name = raghad.split('.')[0];
+  this.urlImage = `images/${raghad}`;
+  this.likes = 0;
+  this.viwes = 0;
+  position.push(this);
 }
-if(localStorage.previousChartData){
- busMall.list = JSON.parse(localStorage.getItem('previousChartData'));
-}else{
-  newInstances(imagesNames,imagesPaths,images);
+for (var i = 0; i < busMallImages.length; i++) {
+  new Positions(busMallImages[i]);
 }
+var left, right, center;
 
-function newInstances(newName, newFilePath, newDescription){
-  for (var i = 0; i< imagesNames.length; i++){
-    new busMall(newName[i], newFilePath[i], newDescription[i]);
+
+function renderImages() {
+  left = position[randomNumber(0, position.length - 1)];
+  right = position[randomNumber(0, position.length - 1)];
+  center = position[randomNumber(0, position.length - 1)];
+
+  while (left === right || right === center || left === center) {
+    left = position[randomNumber(0, position.length - 1)];
+    right = position[randomNumber(0, position.length - 1)];
+    center = position[randomNumber(0), position.length - 1];
+  }
+
+  leftImage.setAttribute('src', left.urlImage);
+  leftImage.setAttribute('alt', left.name);
+
+  rightImage.setAttribute('src', right.urlImage);
+  rightImage.setAttribute('alt', right.name);
+
+  centerImage.setAttribute('src', center.urlImage);
+  centerImage.setAttribute('alt', center.name);
+}
+renderImages();
+
+function clickImage(e) {
+  if (e.target.id === 'leftImge' || e.target.id === 'rightImge' || e.target.id === 'centerImge') {
+    renderImages();
+    totalClicks++;
+  }
+  if (event.target.id === 'leftImge') {
+    left.likes++;
+  }
+  if (event.target.id === 'rightImge') {
+    right.likes++;
+  }
+  if (event.target.id === 'centerImge') {
+    center.likes++;
+  }
+  if (totalClicks === 25) {
+
+    groupImageSection.removeEventListener('click', clickImage);
+    rightImage.remove();
+    leftImage.remove();
+    centerImage.remove();
+    renderChartResults();
   }
 }
+// console.log('left is ',left);
+// console.log('right is ',right);
+// console.log('center is ',center);
 
-console.log(busMall.list);
+groupImageSection.addEventListener('click', clickImage);
 
-function getrandomnumber(){
-  return Math.floor(Math.random()* busMall.list.length);
+
+
+
+
+function randomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
-
-function setupEventListener(){
-  var img = ['image1', 'image2', 'image3'];
-  for(var i =0; i < img.length; i++){
-    var imgGroups = document.getElementById(img[i]);
-    imgGroups.addEventListener('click', runClick);
-  }
-}
-
-
-function rmEventListener(){
-  var img = ['image1', 'image2', 'image3'];
-  for(var i =0; i < img.length; i++){
-    var imgGroups = document.getElementById(img[i]);
-    imgGroups.removeEventListener('click', runClick);
-  }
-}
-
-
-
-function runClick(event){
-  Count++;
-  for(var i = 0; i < busMall.list.length; i++){
-    if(busMall.list[i].name === event.target.alt){
-      busMall.list[i].numClicked++;
-
-      if(Count === maxClicked){
-        localStorage.setItem('previousChartData', JSON.stringify(busMall.list));
-        rmEventListener();
-        doTheChartThing();
+//    console.log(position);
+   function renderChartResults(){
+     var positionNames = [];
+     var positionClicks = [];
+     for(var i = 0 ; i < position.length ; i++){
        
-       
-        break;
-      }
-
-    }
-  }
-  getRandoImages();
-}
-
-
-var previousImgDisplayedArr = [];
-
-function getRandoImages(){
-  var img = ['image1', 'image2', 'image3'];
-  var currentImgDisplayedArr = [];
-  for (var i = 0; i < img.length; i++){
-    var image = document.getElementById(img[i]);
-    var deDuplicated = false;
-    while(deDuplicated === false){
-      var randomImageIndex = getrandomnumber();
-      if (!currentImgDisplayedArr.includes(randomImageIndex) && !previousImgDisplayedArr.includes(randomImageIndex)){
-        currentImgDisplayedArr.push(randomImageIndex);
-        busMall.list[randomImageIndex].numDisplayed++;
-        image.src = busMall.list[randomImageIndex].filePath;
-        image.alt = busMall.list[randomImageIndex].name;
-        deDuplicated = true;
-      }
-
-    }
-  }
-  previousImgDisplayedArr = currentImgDisplayedArr;
-}
-
-
-
-setupEventListener();
-getRandoImages();
-
-var ctx = document.getElementById('chartArea').getContext('2d');
-
-var allTheData = busMall.list;
-
+       positionNames.push(position[i].name);
+       positionClicks.push(position[i].likes);
+     }
+     var ctx = document.getElementById('myposition').getContext('2d');
+     var myChart = new Chart(ctx, {
+       type: 'bar',
+       data: {
+         labels: positionNames,
+         datasets: [{
+           label: '# of Votes',
+           data: positionClicks,
+           backgroundColor: 'rgba(255, 99, 132, 0.2)',
+           borderColor: 'rgba(255, 99, 132, 1)',
+           borderWidth: 1
+         }]
+       },
+       options: {
+         scales: {
+           yAxes: [{
+             ticks: {
+               beginAtZero: true
+             }
+           }]
+         }
+       }
+     });
+   }
