@@ -1,5 +1,12 @@
 
-  
+  body{
+    background-color:wheat;
+  }
+h1{
+  padding: 50px;
+  background-color: teal;
+  margin: 50px;
+}
   header {
     position: relative;
    background-color: whitesmoke;
@@ -40,4 +47,10 @@
   #image3{
     float:left;
   } 
-  
+  p{
+    color:brown;
+    background-color: cornsilk;
+    padding-top: 80px;
+    text-align: center;
+    tab-size: 100px;
+  }

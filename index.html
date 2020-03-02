@@ -1,37 +1,36 @@
-
-    <!DOCTYPE html>
-
-<html>
+<html lang="en">
 
 <head>
-  <title>Bus Mall</title>
-  <link rel="stylesheet" href="reset.css" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Buss Mall</title>
+  <link rel="stylesheet" href="reset.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  
-  <header>
-    <h1>Bus Mall</h1>
-  </header>
 
   <main>
-    <section id="results-container"> </section>
+    <section id="all_images">
+      <h1>I've goat a few pictures for you!</h1>
+      <p>each time choose one from three images , you have 25 rounds</p>
 
-    <section id="user-interface">
-      <div id="images-container">
-        <div class="imageBox1"><img id="image1" /></div>
-        <div class="imageBox2"><img id="image2" /></div>
-        <div class="imageBox3"><img id="image3" /></div>
-      </div>
-      <div id="vote-button">
-        <button>Vote!</button>
-      </div>
+
+      <img id="leftImge" src="" alt="">
+
+
+      <img id="centerImge" src="" alt="">
+
+      <img id="rightImge" src="" alt="">
+
+      <!--  -->
+     
     </section>
+    <canvas id="myposition" width="200" height="150"></canvas>
+  </main>
 
-    </section>  
-    </main>
-
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
   <script src="app.js"></script>
 </body>
 
