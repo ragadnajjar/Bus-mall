@@ -25,6 +25,7 @@ var leftImage = document.querySelector('#leftImge');
 var centerImage = document.querySelector('#centerImge')
 var rightImage = document.querySelector('#rightImge');
 var groupImageSection = document.getElementById('all_images');
+getItem();
 
 var position = [];
 var totalClicks = 1;
@@ -39,7 +40,22 @@ function Positions(raghad) {
 for (var i = 0; i < busMallImages.length; i++) {
   new Positions(busMallImages[i]);
 }
-var left, right, center;
+var savedViews=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+function setItem(){
+  
+  for (var i = 0 ; i < position.length ; i++){
+    savedViews[i] = savedViews[i] + position[i].viwes;
+    position[i].viwes=savedViews[i];
+  }
+  localStorage.setItem( 'yy',JSON.stringify(position));
+
+}
+
+function getItem(){
+  var get = localStorage.getItem('yy');
+  JSON.parse(get);}
+  renderImages();
+  var left, right, center;
 
 
 function renderImages() {
@@ -64,9 +80,13 @@ function renderImages() {
 }
 renderImages();
 
+
 function clickImage(e) {
   if (e.target.id === 'leftImge' || e.target.id === 'rightImge' || e.target.id === 'centerImge') {
     renderImages();
+    left.viwes++;
+    right.viwes++;
+    center.viwes++;
     totalClicks++;
   }
   if (event.target.id === 'leftImge') {
@@ -85,6 +105,8 @@ function clickImage(e) {
     leftImage.remove();
     centerImage.remove();
     renderChartResults();
+    console.log(right.likes);
+    setItem();
   }
 }
 // console.log('left is ',left);
@@ -132,4 +154,5 @@ function randomNumber(min, max) {
          }
        }
      });
-   }
+    }
+  
