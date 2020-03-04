@@ -1,3 +1,7 @@
+function randomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 var busMallImages = [
   'bag.jpg',
   'banana.jpg',
@@ -25,7 +29,6 @@ var leftImage = document.querySelector('#leftImge');
 var centerImage = document.querySelector('#centerImge')
 var rightImage = document.querySelector('#rightImge');
 var groupImageSection = document.getElementById('all_images');
-getItem();
 
 var position = [];
 var totalClicks = 1;
@@ -51,9 +54,13 @@ function setItem(){
 
 }
 
+
+
+
 function getItem(){
   var get = localStorage.getItem('yy');
-  JSON.parse(get);}
+  JSON.parse(get);
+}
   renderImages();
   var left, right, center;
 
@@ -80,6 +87,19 @@ function renderImages() {
 }
 renderImages();
 
+function renderlist(){
+  var ulEl =document.getElementById('list');
+  for ( i= 0;  i < position.length; i++){
+    var liEl=document.createElement ('li');
+    liEl.textContent=` ${position[i].name} , has ${position[i].likes} likes , and ${position[i].viwes} views `
+    ulEl.appendChild(liEl);
+
+  } 
+}
+   
+  groupImageSection.addEventListener('click', clickImage);
+  
+
 
 function clickImage(e) {
   if (e.target.id === 'leftImge' || e.target.id === 'rightImge' || e.target.id === 'centerImge') {
@@ -98,12 +118,14 @@ function clickImage(e) {
   if (event.target.id === 'centerImge') {
     center.likes++;
   }
+
   if (totalClicks === 25) {
 
     groupImageSection.removeEventListener('click', clickImage);
-    rightImage.remove();
-    leftImage.remove();
-    centerImage.remove();
+    // rightImage.remove();
+    // leftImage.remove();
+    // centerImage.remove();
+    renderlist();
     renderChartResults();
     console.log(right.likes);
     setItem();
@@ -113,15 +135,7 @@ function clickImage(e) {
 // console.log('right is ',right);
 // console.log('center is ',center);
 
-groupImageSection.addEventListener('click', clickImage);
 
-
-
-
-
-function randomNumber(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
 //    console.log(position);
    function renderChartResults(){
      var positionNames = [];
@@ -155,4 +169,6 @@ function randomNumber(min, max) {
        }
      });
     }
-  
+    getItem();
+
+
